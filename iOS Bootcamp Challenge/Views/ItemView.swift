@@ -31,7 +31,7 @@ class ItemView: UIView {
         label.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
         label.numberOfLines = 0
         label.textAlignment = .left
-        label.textColor = .gray.withAlphaComponent(0.9)
+        label.textColor = .gray.withAlphaComponent(1.0)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()

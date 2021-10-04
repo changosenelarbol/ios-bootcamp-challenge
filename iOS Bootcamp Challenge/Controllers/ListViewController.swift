@@ -12,9 +12,7 @@ class ListViewController: UICollectionViewController {
 
     private var pokemons: [Pokemon] = []
     private var resultPokemons: [Pokemon] = []
-
     // TODO: Use UserDefaults to pre-load the latest search at start
-
     private var latestSearch: String?
 
     lazy private var searchController: SearchBar = {
@@ -54,6 +52,10 @@ class ListViewController: UICollectionViewController {
         definesPresentationContext = true
 
         refresh()
+        myGroupList.notify(queue: .main) {
+            print("Finished all requests.")
+            self.didRefresh()
+        }
     }
 
     private func setupUI() {
@@ -102,28 +104,32 @@ class ListViewController: UICollectionViewController {
         return cell
     }
 
-    // MARK: - Navigation
-
     // TODO: Handle navigation to detail view controller
-
+   
+    // MARK: - Navigation
+   
     // MARK: - UI Hooks
+    let myGroupList = DispatchGroup()
+    let myGroupListCounter = DispatchGroup()
 
     @objc func refresh() {
         shouldShowLoader = true
-
         var pokemons: [Pokemon] = []
-
         // TODO: Wait for all requests to finish before updating the collection view
-
+        self.myGroupList.enter()
         PokeAPI.shared.get(url: "pokemon?limit=30", onCompletion: { (list: PokemonList?, _) in
             guard let list = list else { return }
             list.results.forEach { result in
+                self.myGroupListCounter.enter()
                 PokeAPI.shared.get(url: "/pokemon/\(result.id)/", onCompletion: { (pokemon: Pokemon?, _) in
                     guard let pokemon = pokemon else { return }
                     pokemons.append(pokemon)
                     self.pokemons = pokemons
-                    self.didRefresh()
+                    self.myGroupListCounter.leave()
                 })
+            }
+            self.myGroupListCounter.notify(queue: .main) {
+                self.myGroupList.leave()
             }
         })
     }
