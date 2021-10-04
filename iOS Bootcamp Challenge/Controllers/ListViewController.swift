@@ -12,6 +12,7 @@ class ListViewController: UICollectionViewController {
 
     private var pokemons: [Pokemon] = []
     private var resultPokemons: [Pokemon] = []
+    private var selectedPokemon: Pokemon?
     // TODO: Use UserDefaults to pre-load the latest search at start
     private var latestSearch: String?
 
@@ -105,9 +106,19 @@ class ListViewController: UICollectionViewController {
     }
 
     // TODO: Handle navigation to detail view controller
-   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let detailViewController = segue.destination as? DetailViewController {
+            detailViewController.pokemon = selectedPokemon
+        }
+
+    }
+
     // MARK: - Navigation
-   
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        selectedPokemon = self.resultPokemons[indexPath.item]
+        self.performSegue(withIdentifier: DetailViewController.segueIdentifier, sender: self)
+    }
+
     // MARK: - UI Hooks
     let myGroupList = DispatchGroup()
     let myGroupListCounter = DispatchGroup()
