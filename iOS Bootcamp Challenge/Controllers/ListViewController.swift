@@ -26,8 +26,12 @@ class ListViewController: UICollectionViewController {
     private var isFirstLauch: Bool = true
 
     // TODO: Add a loading indicator when the app first launches and has no pokemons
-
-    private var shouldShowLoader: Bool = true
+    lazy private var activityIndicator = UIActivityIndicatorView(style: .large)
+    private var shouldShowLoader: Bool = true {
+        didSet {
+            shouldShowLoader ? activityIndicator.startAnimating() : activityIndicator.stopAnimating()
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +76,10 @@ class ListViewController: UICollectionViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.refreshControl = refreshControl
         collectionView.sendSubviewToBack(refreshControl)
+        
+        self.activityIndicator.center = self.view.center
+        self.view.addSubview(activityIndicator)
+
     }
 
     // MARK: - UISearchViewController

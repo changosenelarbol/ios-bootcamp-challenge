@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class DetailViewController: UIViewController {
 
@@ -18,9 +19,9 @@ class DetailViewController: UIViewController {
         gradient.frame = view.bounds
         return gradient
     }
-
+    
     var pokemon: Pokemon?
-
+    
     lazy private var closeButon: UIButton = {
         let button = UIButton(type: .close)
         button.addTarget(self, action: #selector(closeButton), for: .touchUpInside)
