@@ -10,9 +10,9 @@ import Foundation
 // MARK: - Pokemon
 
 enum PokemonType: String, Decodable, CaseIterable, Identifiable {
-
+    
     var id: String { rawValue }
-
+    
     case fire = "Fire"
     case grass = "Grass"
     case water = "Water"
@@ -24,8 +24,37 @@ enum PokemonType: String, Decodable, CaseIterable, Identifiable {
     case fighting = "Fighting"
     case ice = "Ice"
     case ground = "Ground"
-
+    
+    enum CodingKeys: String, CodingKey {
+        case type
+        case slot
+        case name
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let type = try container.nestedContainer(keyedBy: CodingKeys.self, forKey: .type)
+        let name = try type.decode(String.self, forKey: .name)
+        self = PokemonType(rawValue: name.capitalizingFirstLetter()) ?? .normal
+    }
 }
+
+struct PokemonAbility: Decodable {
+    var name: String
+    
+    enum CodingKeyss: String, CodingKey {
+        case name
+        case ability
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeyss.self)
+        let type = try container.nestedContainer(keyedBy: CodingKeyss.self, forKey: .ability)
+        name = try type.decode(String.self, forKey: .name)
+    }
+}
+
+
 
 struct Pokemon: Decodable, Equatable {
 
@@ -63,14 +92,17 @@ struct Pokemon: Decodable, Equatable {
         self.image = try? officialArtWork.decode(String.self, forKey: .frontDefault)
 
         // TODO: Decode list of types & abilities
-
-        self.types = []
-        self.abilities = []
-
+        let types = try container.decode([PokemonType].self, forKey: .types)
+        self.types = types.map({ pokemon in
+            pokemon.rawValue
+        })
+        let abilities = try container.decode([PokemonAbility].self, forKey: .abilities)
+        self.abilities = abilities.map({ pokemonAbility in
+            pokemonAbility.name
+        })
         self.weight = try container.decode(Float.self, forKey: .weight)
         self.baseExperience = try container.decode(Int.self, forKey: .baseExperience)
     }
-
 }
 
 extension Pokemon {

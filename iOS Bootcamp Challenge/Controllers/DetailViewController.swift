@@ -114,7 +114,6 @@ class DetailViewController: UIViewController {
         if let image = pokemon.image, let url = URL(string: image) {
             imageView.kf.setImage(with: url)
         }
-
         guard let types = pokemon.types else { return }
         buildTypes(types)
     }
