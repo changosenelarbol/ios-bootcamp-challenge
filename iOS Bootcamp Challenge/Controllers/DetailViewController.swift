@@ -95,6 +95,10 @@ class DetailViewController: UIViewController {
         // weight
         let weight = "Weight"
         items.append(Item(title: weight, description: "\(pokemon.weight/10) kg"))
+        
+        // height
+        let height = "Height"
+        items.append(Item(title: height, description: "\(pokemon.height) mt"))
 
         // baseExperience
         let baseExperience = "Base Experience"
