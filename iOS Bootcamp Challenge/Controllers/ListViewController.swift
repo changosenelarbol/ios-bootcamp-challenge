@@ -8,23 +8,21 @@
 import UIKit
 import SVProgressHUD
 
-class ListViewController: UICollectionViewController {
+class ListViewController: UICollectionViewController, UISearchControllerDelegate {
 
     private var pokemons: [Pokemon] = []
     private var resultPokemons: [Pokemon] = []
     private var selectedPokemon: Pokemon?
     // TODO: Use UserDefaults to pre-load the latest search at start
     private var latestSearch: String?
-
     lazy private var searchController: SearchBar = {
-        let searchController = SearchBar("Search a pokemon", delegate: nil)
+        let searchController = SearchBar("Search a pokemon", delegate: self)
         searchController.text = latestSearch
         searchController.showsCancelButton = !searchController.isSearchBarEmpty
         return searchController
     }()
 
     private var isFirstLauch: Bool = true
-
     // TODO: Add a loading indicator when the app first launches and has no pokemons
     lazy private var activityIndicator = UIActivityIndicatorView(style: .large)
     private var shouldShowLoader: Bool = true {
@@ -41,7 +39,6 @@ class ListViewController: UICollectionViewController {
     }
 
     // MARK: Setup
-
     private func setup() {
         title = "Pokédex"
 
@@ -53,6 +50,7 @@ class ListViewController: UICollectionViewController {
         navbar.prefersLargeTitles = true
 
         // Set up the searchController parameters.
+      //  searchController.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
@@ -76,14 +74,12 @@ class ListViewController: UICollectionViewController {
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)
         collectionView.refreshControl = refreshControl
         collectionView.sendSubviewToBack(refreshControl)
-        
         self.activityIndicator.center = self.view.center
         self.view.addSubview(activityIndicator)
 
     }
 
     // MARK: - UISearchViewController
-
     private func filterContentForSearchText(_ searchText: String) {
         // filter with a simple contains searched text
         resultPokemons = pokemons
@@ -97,10 +93,7 @@ class ListViewController: UICollectionViewController {
         collectionView.reloadData()
     }
 
-    // TODO: Implement the SearchBar
-
     // MARK: - UICollectionViewDataSource
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return resultPokemons.count
     }
@@ -155,7 +148,6 @@ class ListViewController: UICollectionViewController {
 
     private func didRefresh() {
         shouldShowLoader = false
-
         guard
             let collectionView = collectionView,
             let refreshControl = collectionView.refreshControl
@@ -166,4 +158,13 @@ class ListViewController: UICollectionViewController {
         filterContentForSearchText("")
     }
 
+}
+
+// TODO: Implement the SearchBar
+extension ListViewController: SearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) { }
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) { }
+    func updateSearchResults(for text: String) {
+        self.filterContentForSearchText(text)
+    }
 }
