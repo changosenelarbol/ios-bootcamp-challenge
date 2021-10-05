@@ -14,7 +14,14 @@ class ListViewController: UICollectionViewController, UISearchControllerDelegate
     private var resultPokemons: [Pokemon] = []
     private var selectedPokemon: Pokemon?
     // TODO: Use UserDefaults to pre-load the latest search at start
-    private var latestSearch: String?
+    private var latestSearch: String? {
+        get {
+            return  UserDefaults.standard.string(forKey: "latestSearch")
+        }
+        set {
+            UserDefaults.standard.set(newValue, forKey: "latestSearch")
+        }
+    }
     lazy private var searchController: SearchBar = {
         let searchController = SearchBar("Search a pokemon", delegate: self)
         searchController.text = latestSearch
@@ -152,12 +159,16 @@ class ListViewController: UICollectionViewController, UISearchControllerDelegate
             let collectionView = collectionView,
             let refreshControl = collectionView.refreshControl
         else { return }
-
         refreshControl.endRefreshing()
-
-        filterContentForSearchText("")
+        if isFirstLauch {
+            if let lastSearch = latestSearch {
+                searchController.text = lastSearch
+                filterContentForSearchText(lastSearch)
+            } else {
+                filterContentForSearchText("")
+            }
+        }
     }
-
 }
 
 // TODO: Implement the SearchBar
@@ -166,5 +177,6 @@ extension ListViewController: SearchBarDelegate {
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) { }
     func updateSearchResults(for text: String) {
         self.filterContentForSearchText(text)
+        if text != "" { self.latestSearch = text }
     }
 }
