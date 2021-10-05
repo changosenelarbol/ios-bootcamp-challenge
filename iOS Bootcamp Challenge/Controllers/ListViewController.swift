@@ -7,6 +7,7 @@
 
 import UIKit
 import SVProgressHUD
+import SwiftUI
 
 class ListViewController: UICollectionViewController, UISearchControllerDelegate {
 
@@ -48,7 +49,7 @@ class ListViewController: UICollectionViewController, UISearchControllerDelegate
     // MARK: Setup
     private func setup() {
         title = "Pokédex"
-
+        playPokemonSong()
         // Customize navigation bar.
         guard let navbar = self.navigationController?.navigationBar else { return }
 
@@ -57,10 +58,8 @@ class ListViewController: UICollectionViewController, UISearchControllerDelegate
         navbar.prefersLargeTitles = true
 
         // Set up the searchController parameters.
-      //  searchController.delegate = self
         navigationItem.searchController = searchController
         definesPresentationContext = true
-
         refresh()
         myGroupList.notify(queue: .main) {
             print("Finished all requests.")
@@ -69,13 +68,11 @@ class ListViewController: UICollectionViewController, UISearchControllerDelegate
     }
 
     private func setupUI() {
-
         // Set up the collection view.
         collectionView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         collectionView.backgroundColor = .white
         collectionView.alwaysBounceVertical = true
         collectionView.indicatorStyle = .white
-
         // Set up the refresh control as part of the collection view when it's pulled to refresh.
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refresh), for: .valueChanged)

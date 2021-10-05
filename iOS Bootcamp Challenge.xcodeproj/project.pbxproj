@@ -14,6 +14,8 @@
 		3C5634772703B4A500EB996C /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5634762703B4A500EB996C /* Card.swift */; };
 		3C56348027041BBB00EB996C /* UserDefaults+CustomKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C56347F27041BBB00EB996C /* UserDefaults+CustomKeys.swift */; };
 		8BDBB4DF270B90BA00A78ED1 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDBB4DE270B90BA00A78ED1 /* Extensions.swift */; };
+		8BDBB4E3270C086000A78ED1 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BDBB4E2270C085F00A78ED1 /* Player.swift */; };
+		8BDBB4E6270C090F00A78ED1 /* pokemonSong.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8BDBB4E5270C090F00A78ED1 /* pokemonSong.mp3 */; };
 		C36BFB582700DCCE00F8CCAC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36BFB572700DCCE00F8CCAC /* AppDelegate.swift */; };
 		C36BFB5A2700DCCE00F8CCAC /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C36BFB592700DCCE00F8CCAC /* SceneDelegate.swift */; };
 		C36BFB5F2700DCCE00F8CCAC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C36BFB5D2700DCCE00F8CCAC /* Main.storyboard */; };
@@ -74,6 +76,8 @@
 		3C5634762703B4A500EB996C /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3C56347F27041BBB00EB996C /* UserDefaults+CustomKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+CustomKeys.swift"; sourceTree = "<group>"; };
 		8BDBB4DE270B90BA00A78ED1 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		8BDBB4E2270C085F00A78ED1 /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		8BDBB4E5270C090F00A78ED1 /* pokemonSong.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pokemonSong.mp3; sourceTree = "<group>"; };
 		C36BFB542700DCCE00F8CCAC /* iOS Bootcamp Challenge.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "iOS Bootcamp Challenge.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C36BFB572700DCCE00F8CCAC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C36BFB592700DCCE00F8CCAC /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +163,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		8BDBB4E4270C08EE00A78ED1 /* Audio */ = {
+			isa = PBXGroup;
+			children = (
+				8BDBB4E5270C090F00A78ED1 /* pokemonSong.mp3 */,
+			);
+			path = Audio;
+			sourceTree = "<group>";
+		};
 		C36BFB4B2700DCCE00F8CCAC = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +196,7 @@
 		C36BFB562700DCCE00F8CCAC /* iOS Bootcamp Challenge */ = {
 			isa = PBXGroup;
 			children = (
+				8BDBB4E4270C08EE00A78ED1 /* Audio */,
 				3C56347D27041B1C00EB996C /* Commons */,
 				3C56346F270397E100EB996C /* Views */,
 				C36BFB572700DCCE00F8CCAC /* AppDelegate.swift */,
@@ -244,6 +257,7 @@
 				8BDBB4DE270B90BA00A78ED1 /* Extensions.swift */,
 				3C5634742703A68600EB996C /* Item.swift */,
 				3C5634762703B4A500EB996C /* Card.swift */,
+				8BDBB4E2270C085F00A78ED1 /* Player.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -369,6 +383,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BDBB4E6270C090F00A78ED1 /* pokemonSong.mp3 in Resources */,
 				C36BFB672700DCD000F8CCAC /* LaunchScreen.storyboard in Resources */,
 				C36BFB642700DCD000F8CCAC /* Assets.xcassets in Resources */,
 				C38493B62704B78A00386A1B /* README.md in Resources */,
@@ -425,6 +440,7 @@
 				C36BFB622700DCCE00F8CCAC /* iOS_Bootcamp_Challenge.xcdatamodeld in Sources */,
 				C36BFB9E270102C900F8CCAC /* PokeAPI.swift in Sources */,
 				8BDBB4DF270B90BA00A78ED1 /* Extensions.swift in Sources */,
+				8BDBB4E3270C086000A78ED1 /* Player.swift in Sources */,
 				3C563471270397F300EB996C /* CardView.swift in Sources */,
 				C36BFB8B2700E14000F8CCAC /* Networking.swift in Sources */,
 				C36BFB582700DCCE00F8CCAC /* AppDelegate.swift in Sources */,

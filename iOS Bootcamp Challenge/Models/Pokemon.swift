@@ -54,8 +54,6 @@ struct PokemonAbility: Decodable {
     }
 }
 
-
-
 struct Pokemon: Decodable, Equatable {
 
     let id: Int

@@ -35,15 +35,12 @@ class CardView: UIView {
     }
 
     private func setup() {
+        // TODO: Display pokemon info (eg. types, abilities)
         guard let card = card else { return }
-
         var bigDescription = card.title
         for item in card.items {
             bigDescription += "\n" + item.description
         }
-       
-        
-
         titleLabel.attributedText = createAboutPokemonTextForLabel(items: card.items)
         backgroundColor = .white
         layer.cornerRadius = 20
@@ -54,8 +51,6 @@ class CardView: UIView {
         titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: margin * 2).isActive = true
         titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: margin).isActive = true
         titleLabel.widthAnchor.constraint(lessThanOrEqualTo: self.widthAnchor, multiplier: 0.70).isActive = true
-
-        // TODO: Display pokemon info (eg. types, abilities)
     }
 
 }

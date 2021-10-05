@@ -87,9 +87,9 @@ class DetailViewController: UIViewController {
         // abilities
         if let abilities = pokemon.abilities {
             let title = "Abilities"
-            let description = abilities.joined(separator: "\n")
+            let description = abilities.joined(separator: ", ")
             let item = Item(title: title, description: description)
-            //items.append(item)
+            items.append(item)
         }
 
         // weight
@@ -116,12 +116,18 @@ class DetailViewController: UIViewController {
         setup()
         setupUI()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        UIView.animate(withDuration: 1) {
+            self.imageView.alpha = 1
+        }
+    }
 
     private func setup() {
         guard let pokemon = pokemon else { return }
         nameLabel.text = pokemon.name.capitalized
         idLabel.text = pokemon.formattedNumber()
-
+        imageView.alpha = 0
         guard let gradient = gradient else { return }
         view.layer.insertSublayer(gradient, at: 0)
 
