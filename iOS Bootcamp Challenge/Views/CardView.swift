@@ -16,6 +16,7 @@ class CardView: UIView {
         let label = UILabel()
         label.font = UIFont.boldSystemFont(ofSize: 27)
         label.textAlignment = .left
+        label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -36,9 +37,14 @@ class CardView: UIView {
     private func setup() {
         guard let card = card else { return }
 
-        card.items.forEach { _ in }
+        var bigDescription = card.title
+        for item in card.items {
+            bigDescription += "\n" + item.description
+        }
+       
+        
 
-        titleLabel.text = card.title
+        titleLabel.attributedText = createAboutPokemonTextForLabel(items: card.items)
         backgroundColor = .white
         layer.cornerRadius = 20
     }

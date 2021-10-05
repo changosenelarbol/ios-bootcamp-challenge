@@ -55,6 +55,15 @@ class DetailViewController: UIViewController {
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
+    
+    lazy private var abilitiesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.distribution = .fill
+        stackView.spacing = margin/2
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
 
     lazy private var imageView: UIImageView = {
         let view = UIImageView()
@@ -80,7 +89,7 @@ class DetailViewController: UIViewController {
             let title = "Abilities"
             let description = abilities.joined(separator: "\n")
             let item = Item(title: title, description: description)
-            items.append(item)
+            //items.append(item)
         }
 
         // weight
@@ -116,7 +125,14 @@ class DetailViewController: UIViewController {
             imageView.kf.setImage(with: url)
         }
         guard let types = pokemon.types else { return }
-        buildTypes(types)
+       // buildTypes(types)
+        addLabelsInStackView(stackView: typesStackView, labels: buildLittleLabels(types))
+        
+        guard let abilities = pokemon.abilities else { return }
+       // buildTypes(types)
+        addLabelsInStackView(stackView: abilitiesStackView, labels: buildLittleLabels(abilities))
+        
+        
     }
 
     private func setupUI() {
@@ -137,6 +153,11 @@ class DetailViewController: UIViewController {
         typesStackView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: margin).isActive = true
         typesStackView.leftAnchor.constraint(equalTo: closeButon.leftAnchor).isActive = true
         typesStackView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.7).isActive = true
+        
+        view.addSubview(abilitiesStackView)
+        abilitiesStackView.topAnchor.constraint(equalTo: typesStackView.bottomAnchor, constant: margin / 2).isActive = true
+        abilitiesStackView.leftAnchor.constraint(equalTo: closeButon.leftAnchor).isActive = true
+        abilitiesStackView.widthAnchor.constraint(lessThanOrEqualTo: view.widthAnchor, multiplier: 0.7).isActive = true
 
         view.addSubview(cardView)
         cardView.topAnchor.constraint(equalTo: view.topAnchor, constant: view.frame.size.height/2.5).isActive = true
@@ -167,6 +188,32 @@ class DetailViewController: UIViewController {
             label.widthAnchor.constraint(equalToConstant: paddedWidth).isActive = true
             typesStackView.addArrangedSubview(label)
         }
+    }
+    
+    func addLabelsInStackView(stackView: UIStackView, labels: [UILabel]) {
+        for label in labels {
+            stackView.addArrangedSubview(label)
+        }
+    }
+    
+    private func buildLittleLabels(_ types: [String]) -> [UILabel] {
+        var labels: [UILabel] = []
+        types.forEach { type in
+            let padding = 20.0
+            let label = UILabel()
+            label.textAlignment = .center
+            label.font = UIFont.boldSystemFont(ofSize: 17)
+            label.textColor = .white
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.text = type.capitalized
+            label.backgroundColor = .white.withAlphaComponent(0.30)
+            label.layer.cornerRadius = 7.0
+            label.layer.masksToBounds = true
+            let paddedWidth = label.intrinsicContentSize.width + padding
+            label.widthAnchor.constraint(equalToConstant: paddedWidth).isActive = true
+            labels.append(label)
+        }
+        return labels
     }
 
 }
